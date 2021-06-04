@@ -13,6 +13,12 @@ let outer_panel = undefined;
 function activate(context) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('catCoding.start', () => {
+
+			if (outer_panel) {
+				outer_panel.reveal(vscode.window.activeTextEditor);
+				return;
+			}
+
 			// Create and show a new webview
 			let panel = vscode.window.createWebviewPanel(
 				'catCoding', // Identifies the type of the webview. Used internally
@@ -21,7 +27,6 @@ function activate(context) {
 				{} // Webview options. More on these later.
 			);
 			outer_panel = panel;
-
 			//todo: new code for
 			updateWebview(panel);
 
