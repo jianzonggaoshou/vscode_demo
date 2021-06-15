@@ -11,6 +11,13 @@ let outer_panel = undefined;
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
+	const provider = function provider(document, position, token) {
+		return new vscode.DocumentHighlight(new vscode.Range(new vscode.Position(2, 10), new vscode.Position(3, 10)));
+	}
+
+	const highlight = vscode.languages.registerDocumentHighlightProvider({ scheme: 'file', language: 'xml' }, provider);
+	context.subscriptions.push(highlight);
+
 	context.subscriptions.push(
 		vscode.commands.registerCommand('catCoding.start', () => {
 
@@ -70,5 +77,9 @@ function deactivate() { }
 module.exports = {
 	activate,
 	deactivate
+}
+
+function position(document, position, token) {
+	throw new Error('Function not implemented.');
 }
 
